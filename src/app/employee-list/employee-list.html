@@ -1,1 +1,60 @@
-<p>employee-list works!</p>
+<div class="container">
+
+  <div class="header">
+    <div>
+      <h1>Employee Management</h1>
+      <p>Manage your employees</p>
+    </div>
+
+    <button class="add-btn">+ Add Employee</button>
+  </div>
+
+  <div class="status">
+    
+  </div>
+
+  <div class="table-card">
+
+    <table>
+      <thead>
+        <tr>
+          <th>Employee ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Department</th>
+          <th>Designation</th>
+          <th>Status</th>
+          <th>Role</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (employee of employees; track employee.employeeId) {
+          <tr>
+            <td>{{ employee.employeeId }}</td>
+            <td>{{ employee.name }}</td>
+            <td>{{ employee.email }}</td>
+            <td>{{ employee.department }}</td>
+            <td>{{ employee.designation }}</td>
+            <td>
+              <span class="status-badge">
+                {{ employee.status }}
+              </span>
+            </td>
+            <td>{{ employee.role }}</td>
+          </tr>
+        }
+
+        @empty {
+          <tr>
+            <td colspan="7" class="empty">
+              No employees found
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+  </div>
+
+</div>

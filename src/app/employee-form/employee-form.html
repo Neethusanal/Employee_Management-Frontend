@@ -1,1 +1,37 @@
-<p>employee-form works!</p>
+<h2>Add Employee</h2>
+
+<form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+
+  <label>Name</label>
+  <input type="text" formControlName="name">
+
+  <label>Email</label>
+  <input type="email" formControlName="email">
+
+  <label>Phone Number</label>
+  <input type="text" formControlName="phoneNumber">
+
+  <label>Department</label>
+  <input type="text" formControlName="department">
+
+  <label>Designation</label>
+  <input type="text" formControlName="designation">
+
+  <label>Joining Date</label>
+  <input type="date" formControlName="joiningDate">
+
+  <label>Status</label>
+  <select formControlName="status">
+    <option value="ACTIVE">ACTIVE</option>
+    <option value="INACTIVE">INACTIVE</option>
+  </select>
+
+  <label>Role</label>
+  <select formControlName="role">
+    <option value="EMPLOYEE">EMPLOYEE</option>
+    <option value="ADMIN">ADMIN</option>
+  </select>
+
+  <button type="submit">Save Employee</button>
+
+</form>
