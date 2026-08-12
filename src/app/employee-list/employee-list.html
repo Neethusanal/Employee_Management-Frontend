@@ -2,57 +2,82 @@
 
   <div class="header">
     <div>
+        
       <h1>Employee Management</h1>
       <p>Manage your employees</p>
+      <p>Total Employees: {{ employees.length }}</p>
     </div>
 
-    <button class="add-btn">+ Add Employee</button>
-  </div>
-
-  <div class="status">
-    
+    <button class="add-btn">
+      + Add Employee
+    </button>
   </div>
 
   <div class="table-card">
 
     <table>
+
       <thead>
         <tr>
           <th>Employee ID</th>
           <th>Name</th>
           <th>Email</th>
+          <th>Phone</th>
           <th>Department</th>
           <th>Designation</th>
+          <th>Joining Date</th>
           <th>Status</th>
           <th>Role</th>
         </tr>
       </thead>
 
       <tbody>
+        
+
         @for (employee of employees; track employee.employeeId) {
+
           <tr>
+
             <td>{{ employee.employeeId }}</td>
+
             <td>{{ employee.name }}</td>
+
             <td>{{ employee.email }}</td>
+
+            <td>{{ employee.phoneNumber }}</td>
+
             <td>{{ employee.department }}</td>
+
             <td>{{ employee.designation }}</td>
+
+            <td>{{ employee.joiningDate }}</td>
+
             <td>
               <span class="status-badge">
                 {{ employee.status }}
               </span>
             </td>
-            <td>{{ employee.role }}</td>
+
+            <td>
+              {{ employee.role }}
+            </td>
+
           </tr>
+
         }
 
         @empty {
+
           <tr>
-            <td colspan="7" class="empty">
+            <td colspan="9" class="empty">
               No employees found
             </td>
           </tr>
+
         }
+
       </tbody>
+
     </table>
 
   </div>
