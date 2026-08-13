@@ -2,6 +2,8 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmployeeService } from '../services/employee.service';
 import { Employee } from '../models/employee';
+import { Auth } from '../services/auth';
+
 
 @Component({
   selector: 'app-employee-list',
@@ -10,7 +12,11 @@ import { Employee } from '../models/employee';
   styleUrl: './employee-list.css'
 })
 export class EmployeeList implements OnInit {
-
+   
+    constructor(
+    
+    private auth: Auth
+  ) {}
   private employeeService = inject(EmployeeService);
   private router = inject(Router);
 
@@ -79,5 +85,11 @@ export class EmployeeList implements OnInit {
     }
 
   });
+}
+
+
+  logout() {
+  this.auth.logout();
+  this.router.navigate(['/login'], { replaceUrl: true });
 }
 }

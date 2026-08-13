@@ -1,97 +1,111 @@
+<div class="container">
 
+  <div class="header">
 
-  
     <div>
-        
       <h1>Employee Management</h1>
       <p>Manage your employees</p>
-      
     </div>
 
-   <button
-  type="button"
-  class="add-btn"
-  (click)="addEmployee()">
-  + Add Employee
-</button>
+    <div class="header-actions">
+
+      <button
+        type="button"
+        class="add-btn"
+        (click)="addEmployee()">
+        + Add Employee
+      </button>
+
+      <button
+        type="button"
+        class="logout-btn"
+        (click)="logout()">
+        Logout
+      </button>
+
+    </div>
+
+  </div>
+
   <div class="table-card">
 
+    <table>
 
-<table>
+      <thead>
+        <tr>
+          <th>Employee ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Department</th>
+          <th>Designation</th>
+          <th>Joining Date</th>
+          <th>Status</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
 
-  <thead>
-    <tr>
-      <th>Employee ID</th>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>Department</th>
-      <th>Designation</th>
-      <th>Joining Date</th>
-      <th>Status</th>
-      <th>Role</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
+      <tbody>
 
-  <tbody>
+        @for (employee of employees(); track employee.employeeId) {
 
-    @for (employee of employees(); track employee.employeeId) {
+          <tr>
 
-      <tr>
+            <td>{{ employee.employeeId }}</td>
+            <td>{{ employee.name }}</td>
+            <td>{{ employee.email }}</td>
+            <td>{{ employee.phoneNumber }}</td>
+            <td>{{ employee.department }}</td>
+            <td>{{ employee.designation }}</td>
+            <td>{{ employee.joiningDate }}</td>
 
-        <td>{{ employee.employeeId }}</td>
-        <td>{{ employee.name }}</td>
-        <td>{{ employee.email }}</td>
-        <td>{{ employee.phoneNumber }}</td>
-        <td>{{ employee.department }}</td>
-        <td>{{ employee.designation }}</td>
-        <td>{{ employee.joiningDate }}</td>
+            <td>
+              <span class="status-badge">
+                {{ employee.status }}
+              </span>
+            </td>
 
-        <td>
-          <span class="status-badge">
-            {{ employee.status }}
-          </span>
-        </td>
+            <td>{{ employee.role }}</td>
 
-        <td>
-          {{ employee.role }}
-        </td>
+            <td>
+              <div class="actions">
 
-        <!-- ACTIONS -->
-        <td>
-          <button
-            type="button"
-            class="edit-btn"
-            (click)="editEmployee(employee)">
-            Edit
-          </button>
+                <button
+                  type="button"
+                  class="edit-btn"
+                  (click)="editEmployee(employee)">
+                  Edit
+                </button>
 
-          <button
-            type="button"
-            class="delete-btn"
-            (click)="deleteEmployee(employee.employeeId)">
-            Delete
-          </button>
-        </td>
+                <button
+                  type="button"
+                  class="delete-btn"
+                  (click)="deleteEmployee(employee.employeeId)">
+                  Delete
+                </button>
 
-      </tr>
+              </div>
+            </td>
 
-    }
+          </tr>
 
-    @empty {
+        }
 
-      <tr>
-        <td colspan="10" class="empty">
-          No employees found
-        </td>
-      </tr>
+        @empty {
 
-    }
+          <tr>
+            <td colspan="10" class="empty">
+              No employees found
+            </td>
+          </tr>
 
-  </tbody>
+        }
 
-</table>
+      </tbody>
 
-  
+    </table>
 
+  </div>
+
+</div>
