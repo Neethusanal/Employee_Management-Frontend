@@ -16,9 +16,21 @@ export class EmployeeService {
     return this.http.get<Employee[]>(this.apiUrl);
   }
 
+
   createEmployee(employee: Employee): Observable<Employee> {
-    return this.http.post<Employee>(this.apiUrl, employee);
+
+    const createUrl = `${this.apiUrl}/new`;
+
+    console.log('API URL:', createUrl);
+    console.log('Employee data being sent:', employee);
+
+    return this.http.post<Employee>(createUrl, employee);
   }
+  getEmployeeById(id: string): Observable<Employee> {
+  return this.http.get<Employee>(
+    `${this.apiUrl}/${id}`
+  );
+}
 
   updateEmployee(
     id: string,

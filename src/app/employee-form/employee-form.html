@@ -1,4 +1,4 @@
-<h2>Add Employee</h2>
+<h2>{{ isEditMode ? 'Edit Employee' : 'Add Employee' }}</h2>
 
 <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
 
@@ -32,6 +32,8 @@
     <option value="ADMIN">ADMIN</option>
   </select>
 
-  <button type="submit">Save Employee</button>
+  <button type="submit">
+    {{ isEditMode ? 'Update Employee' : 'Save Employee' }}
+  </button>
 
 </form>
