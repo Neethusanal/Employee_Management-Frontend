@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import {  FormGroup, Validators } from '@angular/forms';
 import { EmployeeService } from '../services/employee.service';
 import { Employee } from '../models/employee';
 
@@ -11,6 +11,7 @@ import { Employee } from '../models/employee';
   templateUrl: './employee-form.html',
   styleUrl: './employee-form.css'
 })
+
 export class EmployeeForm implements OnInit {
 
   private fb = inject(FormBuilder);
@@ -21,17 +22,34 @@ export class EmployeeForm implements OnInit {
   isEditMode = false;
   employeeId: string | null = null;
 
-  employeeForm = this.fb.group({
-    name: [''],
-    email: [''],
-    phoneNumber: [''],
-    department: [''],
-    designation: [''],
-    joiningDate: [''],
-    status: ['ACTIVE'],
-    role: ['EMPLOYEE']
-  });
+ employeeForm = this.fb.group({
+  name: ['', Validators.required],
 
+  email: ['', [
+    Validators.required,
+    Validators.email
+  ]],
+
+  phoneNumber: ['', Validators.required],
+
+  department: ['', Validators.required],
+
+  designation: ['', Validators.required],
+
+  joiningDate: ['', Validators.required],
+
+  status: ['ACTIVE', Validators.required],
+
+  role: ['EMPLOYEE', Validators.required]
+});
+isInvalid(fieldName: string): boolean {
+  const field = this.employeeForm.get(fieldName);
+
+  return !!field &&
+         field.invalid &&
+         (field.touched || field.dirty);
+}
+successMessage = '';
   ngOnInit() {
 
     // Get employee ID from URL
@@ -65,11 +83,11 @@ export class EmployeeForm implements OnInit {
   }
 
   onSubmit() {
-
-    if (this.employeeForm.invalid) {
-      return;
-    }
-
+if (this.employeeForm.invalid) {
+    this.employeeForm.markAllAsTouched();
+    return;
+  }
+   
     const employee = this.employeeForm.value as Employee;
 
     // EDIT

@@ -53,3 +53,18 @@ button {
 button:hover {
   background: #0056b3;
 }
+.error {
+  display: block;
+  margin-top: 5px;
+  color: #dc2626;
+  font-size: 13px;
+}
+
+.success-message {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  background: #e8f5e9;
+  color: #2e7d32;
+  font-size: 14px;
+}

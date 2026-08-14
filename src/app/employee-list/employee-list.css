@@ -1,9 +1,18 @@
+/* =========================
+   MAIN CONTAINER
+========================= */
+
 .container {
-  max-width: fit-content;
+  max-width: 1500px;
   margin: 40px auto;
-  padding: 0 20px;
+  padding: 0 25px;
   font-family: Arial, sans-serif;
 }
+
+
+/* =========================
+   HEADER
+========================= */
 
 .header {
   display: flex;
@@ -15,6 +24,7 @@
 .header h1 {
   margin: 0;
   font-size: 30px;
+  color: #222;
 }
 
 .header p {
@@ -22,117 +32,428 @@
   color: #666;
 }
 
-.add-btn {
-  padding: 11px 18px;
-  border: none;
-  border-radius: 6px;
-  background: #007bff;
-  color: white;
-  font-size: 15px;
-  cursor: pointer;
-}
 
-.add-btn:hover {
-  background: #0056b3;
-}
+/* =========================
+   HEADER BUTTONS
+========================= */
 
-.status {
-  padding: 12px 15px;
-  margin-bottom: 20px;
-  border-radius: 6px;
-  background: #e8f5e9;
-  color: #2e7d32;
-}
-
-.table-card {
-  overflow-x: auto;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th {
-  padding: 14px;
-  text-align: left;
-  background: #f5f5f5;
-  font-weight: 600;
-}
-
-td {
-  padding: 14px;
-  border-top: 1px solid #eee;
-}
-
-tr:hover {
-  background: #fafafa;
-}
-
-.status-badge {
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 13px;
-  background: #e8f5e9;
-  color: #2e7d32;
-}
-
-.empty {
-  text-align: center;
-  padding: 30px;
-  color: #777;
-}
-.actions {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.edit-btn,
-.delete-btn {
-  border: none;
-  padding: 8px 14px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.edit-btn {
-  background-color: #2563eb;
-  color: white;
-}
-
-.delete-btn {
-  background-color: #dc2626;
-  color: white;
-}
-
-.edit-btn:hover {
-  background-color: #1d4ed8;
-}
-
-.delete-btn:hover {
-  background-color: #b91c1c;
-}
 .header-actions {
   display: flex;
   gap: 10px;
   align-items: center;
 }
 
+.add-btn,
 .logout-btn {
-  padding: 11px 18px;
   border: none;
+  padding: 11px 18px;
   border-radius: 6px;
-  background: #dc2626;
   color: white;
   font-size: 15px;
   cursor: pointer;
 }
 
+.add-btn {
+  background: #007bff;
+}
+
+.add-btn:hover {
+  background: #0056b3;
+}
+
+.logout-btn {
+  background: #dc2626;
+}
+
 .logout-btn:hover {
   background: #b91c1c;
+}
+
+
+/* =========================
+   SEARCH & FILTER CARD
+========================= */
+
+.search-card {
+  display: flex;
+  align-items: end;
+  gap: 15px;
+  flex-wrap: wrap;
+
+  padding: 20px;
+  margin-bottom: 20px;
+
+  background: white;
+  border-radius: 10px;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================
+   SEARCH BOX
+========================= */
+
+.search-box {
+  position: relative;
+  flex: 1;
+  min-width: 280px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  font-size: 20px;
+  color: #777;
+}
+
+.search-box input {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 11px 40px;
+
+  border: 1px solid #ccc;
+  border-radius: 6px;
+
+  font-size: 14px;
+  outline: none;
+}
+
+.search-box input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+
+/* =========================
+   CLEAR SEARCH BUTTON
+========================= */
+
+.clear-btn {
+  position: absolute;
+
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  border: none;
+  background: transparent;
+
+  font-size: 22px;
+  color: #777;
+
+  cursor: pointer;
+}
+
+.clear-btn:hover {
+  color: #222;
+}
+
+
+/* =========================
+   FILTER BOX
+========================= */
+
+.filter-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  min-width: 170px;
+}
+
+.filter-box label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+}
+
+.filter-box select {
+  padding: 11px 12px;
+
+  border: 1px solid #ccc;
+  border-radius: 6px;
+
+  background: white;
+
+  font-size: 14px;
+
+  cursor: pointer;
+  outline: none;
+}
+
+.filter-box select:focus {
+  border-color: #007bff;
+}
+
+
+/* =========================
+   CLEAR FILTERS BUTTON
+========================= */
+
+.clear-filters-btn {
+  padding: 11px 16px;
+
+  border: 1px solid #dc2626;
+  border-radius: 6px;
+
+  background: white;
+  color: #dc2626;
+
+  font-size: 14px;
+
+  cursor: pointer;
+}
+
+.clear-filters-btn:hover {
+  background: #dc2626;
+  color: white;
+}
+
+
+/* =========================
+   TABLE CARD
+========================= */
+
+.table-card {
+  overflow-x: auto;
+
+  background: white;
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+table {
+  width: 100%;
+  min-width: 1100px;
+
+  border-collapse: collapse;
+}
+
+
+/* =========================
+   TABLE HEADER
+========================= */
+
+th {
+  padding: 14px;
+
+  text-align: left;
+
+  background: #f5f5f5;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #333;
+
+  white-space: nowrap;
+}
+
+
+/* =========================
+   TABLE CELLS
+========================= */
+
+td {
+  padding: 14px;
+
+  border-top: 1px solid #eee;
+
+  font-size: 14px;
+
+  color: #444;
+}
+
+tr:hover {
+  background: #fafafa;
+}
+
+
+/* =========================
+   EMPLOYEE ID
+========================= */
+
+.employee-id {
+  font-size: 12px;
+
+  padding: 5px 8px;
+
+  border-radius: 5px;
+
+  background: #f1f5f9;
+
+  color: #475569;
+
+  font-family: monospace;
+}
+
+
+/* =========================
+   EMPLOYEE NAME
+========================= */
+
+.employee-name {
+  font-weight: 600;
+  color: #222;
+}
+
+
+/* =========================
+   STATUS BADGE
+========================= */
+
+.status-badge {
+  display: inline-block;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-badge.active {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-badge.inactive {
+  background: #ffebee;
+  color: #c62828;
+}
+
+
+/* =========================
+   ROLE BADGE
+========================= */
+
+.role-badge {
+  display: inline-block;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  background: #eef2ff;
+  color: #4338ca;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.actions {
+  display: flex;
+
+  gap: 8px;
+
+  align-items: center;
+}
+
+.edit-btn,
+.delete-btn {
+  border: none;
+
+  padding: 8px 14px;
+
+  border-radius: 5px;
+
+  cursor: pointer;
+
+  font-size: 13px;
+
+  color: white;
+}
+
+.edit-btn {
+  background: #2563eb;
+}
+
+.edit-btn:hover {
+  background: #1d4ed8;
+}
+
+.delete-btn {
+  background: #dc2626;
+}
+
+.delete-btn:hover {
+  background: #b91c1c;
+}
+
+
+/* =========================
+   EMPTY MESSAGE
+========================= */
+
+.empty {
+  text-align: center;
+
+  padding: 40px;
+
+  color: #777;
+
+  font-size: 15px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .header-actions {
+    width: 100%;
+  }
+
+  .add-btn,
+  .logout-btn {
+    flex: 1;
+  }
+
+  .search-card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  .filter-box {
+    width: 100%;
+  }
+
+  .filter-box select {
+    width: 100%;
+  }
+
+  .clear-filters-btn {
+    width: 100%;
+  }
 }

@@ -1,37 +1,140 @@
 <h2>{{ isEditMode ? 'Edit Employee' : 'Add Employee' }}</h2>
 
+@if (successMessage) {
+  <div class="success-message">
+    {{ successMessage }}
+  </div>
+}
+
 <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
 
+  <!-- Name -->
   <label>Name</label>
-  <input type="text" formControlName="name">
+  <input
+    type="text"
+    formControlName="name"
+  >
 
+  @if (isInvalid('name')) {
+    <small class="error">
+      Name is required.
+    </small>
+  }
+
+
+  <!-- Email -->
   <label>Email</label>
-  <input type="email" formControlName="email">
+  <input
+    type="email"
+    formControlName="email"
+  >
 
+  @if (isInvalid('email')) {
+
+    @if (employeeForm.get('email')?.hasError('required')) {
+      <small class="error">
+        Email is required.
+      </small>
+    }
+
+    @if (employeeForm.get('email')?.hasError('email')) {
+      <small class="error">
+        Please enter a valid email address.
+      </small>
+    }
+
+  }
+
+
+  <!-- Phone Number -->
   <label>Phone Number</label>
-  <input type="text" formControlName="phoneNumber">
+  <input
+    type="text"
+    formControlName="phoneNumber"
+  >
 
+  @if (isInvalid('phoneNumber')) {
+    <small class="error">
+      Phone number is required.
+    </small>
+  }
+
+
+  <!-- Department -->
   <label>Department</label>
-  <input type="text" formControlName="department">
+  <input
+    type="text"
+    formControlName="department"
+  >
 
+  @if (isInvalid('department')) {
+    <small class="error">
+      Department is required.
+    </small>
+  }
+
+
+  <!-- Designation -->
   <label>Designation</label>
-  <input type="text" formControlName="designation">
+  <input
+    type="text"
+    formControlName="designation"
+  >
 
+  @if (isInvalid('designation')) {
+    <small class="error">
+      Designation is required.
+    </small>
+  }
+
+
+  <!-- Joining Date -->
   <label>Joining Date</label>
-  <input type="date" formControlName="joiningDate">
+  <input
+    type="date"
+    formControlName="joiningDate"
+  >
 
+  @if (isInvalid('joiningDate')) {
+    <small class="error">
+      Joining date is required.
+    </small>
+  }
+
+
+  <!-- Status -->
   <label>Status</label>
   <select formControlName="status">
+
     <option value="ACTIVE">ACTIVE</option>
     <option value="INACTIVE">INACTIVE</option>
+
   </select>
 
+  @if (isInvalid('status')) {
+    <small class="error">
+      Status is required.
+    </small>
+  }
+
+
+  <!-- Role -->
   <label>Role</label>
   <select formControlName="role">
+
     <option value="EMPLOYEE">EMPLOYEE</option>
     <option value="ADMIN">ADMIN</option>
+
   </select>
 
+  @if (isInvalid('role')) {
+    <small class="error">
+      Role is required.
+    </small>
+  }
+
+
+  <!-- Submit -->
   <button type="submit">
     {{ isEditMode ? 'Update Employee' : 'Save Employee' }}
   </button>

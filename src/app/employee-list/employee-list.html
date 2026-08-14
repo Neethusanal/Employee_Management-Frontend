@@ -1,5 +1,6 @@
 <div class="container">
 
+  <!-- HEADER -->
   <div class="header">
 
     <div>
@@ -27,12 +28,123 @@
 
   </div>
 
+
+  <!-- SEARCH & FILTERS -->
+  <div class="search-card">
+
+    <!-- Search -->
+    <div class="search-box">
+
+      <span class="search-icon">⌕</span>
+
+      <input
+        type="text"
+        placeholder="Search employees by name or email"
+        [value]="searchTerm()"
+        (input)="onSearch($event)"
+      />
+
+      @if (searchTerm()) {
+        <button
+          type="button"
+          class="clear-btn"
+          (click)="clearSearch()">
+          ×
+        </button>
+      }
+
+    </div>
+
+
+    <!-- Department Filter -->
+    <div class="filter-box">
+
+      <label>Department</label>
+
+      <select
+        [value]="departmentFilter()"
+        (change)="onDepartmentFilter($event)">
+
+        <option value="">All Departments</option>
+
+        @for (department of departments(); track department) {
+          <option [value]="department">
+            {{ department }}
+          </option>
+        }
+
+      </select>
+
+    </div>
+
+
+    <!-- Status Filter -->
+    <div class="filter-box">
+
+      <label>Status</label>
+
+      <select
+        [value]="statusFilter()"
+        (change)="onStatusFilter($event)">
+
+        <option value="">All Status</option>
+        <option value="ACTIVE">ACTIVE</option>
+        <option value="INACTIVE">INACTIVE</option>
+
+      </select>
+
+    </div>
+
+
+    <!-- Role Filter -->
+    <div class="filter-box">
+
+      <label>Role</label>
+
+      <select
+        [value]="roleFilter()"
+        (change)="onRoleFilter($event)">
+
+        <option value="">All Roles</option>
+        <option value="EMPLOYEE">EMPLOYEE</option>
+        <option value="ADMIN">ADMIN</option>
+
+      </select>
+
+    </div>
+
+
+    <!-- Clear Filters -->
+    @if (
+      searchTerm() ||
+      departmentFilter() ||
+      statusFilter() ||
+      roleFilter()
+    ) {
+
+      <button
+        type="button"
+        class="clear-filters-btn"
+        (click)="clearFilters()">
+
+        Clear Filters
+
+      </button>
+
+    }
+
+  </div>
+
+
+  <!-- EMPLOYEE TABLE -->
   <div class="table-card">
 
     <table>
 
       <thead>
+
         <tr>
+
           <th>Employee ID</th>
           <th>Name</th>
           <th>Email</th>
@@ -43,61 +155,137 @@
           <th>Status</th>
           <th>Role</th>
           <th>Actions</th>
+
         </tr>
+
       </thead>
+
 
       <tbody>
 
-        @for (employee of employees(); track employee.employeeId) {
+        @for (
+          employee of filteredEmployees();
+          track employee.employeeId
+        ) {
 
           <tr>
 
-            <td>{{ employee.employeeId }}</td>
-            <td>{{ employee.name }}</td>
-            <td>{{ employee.email }}</td>
-            <td>{{ employee.phoneNumber }}</td>
-            <td>{{ employee.department }}</td>
-            <td>{{ employee.designation }}</td>
-            <td>{{ employee.joiningDate }}</td>
-
             <td>
-              <span class="status-badge">
-                {{ employee.status }}
+              <span class="employee-id">
+                {{ employee.employeeId }}
               </span>
             </td>
 
-            <td>{{ employee.role }}</td>
 
             <td>
+
+              <div class="employee-name">
+                {{ employee.name }}
+              </div>
+
+            </td>
+
+
+            <td>
+              {{ employee.email }}
+            </td>
+
+
+            <td>
+              {{ employee.phoneNumber }}
+            </td>
+
+
+            <td>
+              {{ employee.department }}
+            </td>
+
+
+            <td>
+              {{ employee.designation }}
+            </td>
+
+
+            <td>
+              {{ employee.joiningDate }}
+            </td>
+
+
+            <td>
+
+              <span
+                class="status-badge"
+                [class.active]="employee.status === 'ACTIVE'"
+                [class.inactive]="employee.status === 'INACTIVE'">
+
+                {{ employee.status }}
+
+              </span>
+
+            </td>
+
+
+            <td>
+
+              <span class="role-badge">
+
+                {{ employee.role }}
+
+              </span>
+
+            </td>
+
+
+            <td>
+
               <div class="actions">
 
                 <button
                   type="button"
                   class="edit-btn"
                   (click)="editEmployee(employee)">
+
                   Edit
+
                 </button>
+
 
                 <button
                   type="button"
                   class="delete-btn"
                   (click)="deleteEmployee(employee.employeeId)">
+
                   Delete
+
                 </button>
 
               </div>
+
             </td>
 
           </tr>
 
         }
 
+
         @empty {
 
           <tr>
+
             <td colspan="10" class="empty">
-              No employees found
+
+              @if (searchTerm() || departmentFilter() || statusFilter() || roleFilter()) {
+
+                No employees match your search or filters.
+
+              } @else {
+
+                No employees found.
+
+              }
+
             </td>
+
           </tr>
 
         }
