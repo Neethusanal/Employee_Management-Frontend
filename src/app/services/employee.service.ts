@@ -10,7 +10,8 @@ export class EmployeeService {
 
   private http = inject(HttpClient);
 
-  private apiUrl = 'http://localhost:8081/api/employees';
+  // private apiUrl = 'http://localhost:8081/api/employees';
+  private apiUrl = 'https://6e0f-2001-8f8-1737-1a8b-c568-36df-b6d2-c6cd.ngrok-free.app/api/employees';
 
   getEmployees(): Observable<Employee[]> {
     return this.http.get<Employee[]>(this.apiUrl);
