@@ -356,12 +356,13 @@ export class EmployeeList implements OnInit {
   //     { replaceUrl: true }
   //   );
 
-  }
+  // }
   logout(): void {
 
   localStorage.removeItem('loggedIn');
 
   this.router.navigate(['/login']);
 }
+  
 
 }
