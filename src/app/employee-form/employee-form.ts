@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import {  FormGroup, Validators } from '@angular/forms';
+
 import { EmployeeService } from '../services/employee.service';
 import { Employee } from '../models/employee';
 
@@ -11,7 +11,6 @@ import { Employee } from '../models/employee';
   templateUrl: './employee-form.html',
   styleUrl: './employee-form.css'
 })
-
 export class EmployeeForm implements OnInit {
 
   private fb = inject(FormBuilder);
@@ -19,44 +18,73 @@ export class EmployeeForm implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
+  // Backend error message
+  backendError = '';
+
+  // Success message
+  successMessage = '';
+
   isEditMode = false;
   employeeId: string | null = null;
 
- employeeForm = this.fb.group({
-  name: ['', Validators.required],
 
-  email: ['', [
-    Validators.required,
-    Validators.email
-  ]],
+  // =========================
+  // FORM
+  // =========================
 
-  phoneNumber: ['', Validators.required],
+  employeeForm = this.fb.group({
 
-  department: ['', Validators.required],
+    name: ['', Validators.required],
 
-  designation: ['', Validators.required],
+    email: [
+      '',
+      [
+        Validators.required,
+        Validators.email
+      ]
+    ],
 
-  joiningDate: ['', Validators.required],
+    phoneNumber: ['', Validators.required],
 
-  status: ['ACTIVE', Validators.required],
+    department: ['', Validators.required],
 
-  role: ['EMPLOYEE', Validators.required]
-});
-isInvalid(fieldName: string): boolean {
-  const field = this.employeeForm.get(fieldName);
+    designation: ['', Validators.required],
 
-  return !!field &&
-         field.invalid &&
-         (field.touched || field.dirty);
-}
-successMessage = '';
-  ngOnInit() {
+    joiningDate: ['', Validators.required],
 
-    // Get employee ID from URL
+    status: ['ACTIVE', Validators.required],
+
+    role: ['EMPLOYEE', Validators.required]
+
+  });
+
+
+  // =========================
+  // VALIDATION
+  // =========================
+
+  isInvalid(fieldName: string): boolean {
+
+    const field = this.employeeForm.get(fieldName);
+
+    return !!field &&
+      field.invalid &&
+      (field.touched || field.dirty);
+  }
+
+
+  // =========================
+  // INIT
+  // =========================
+
+  ngOnInit(): void {
+
     this.employeeId =
       this.route.snapshot.paramMap.get('employeeId');
 
-    // If employee ID exists, we are editing
+
+    // EDIT MODE
+
     if (this.employeeId) {
 
       this.isEditMode = true;
@@ -67,72 +95,253 @@ successMessage = '';
 
           next: (employee) => {
 
-            console.log('Employee for editing:', employee);
+            console.log(
+              'Employee for editing:',
+              employee
+            );
 
-            // Fill the form with existing employee data
             this.employeeForm.patchValue(employee);
 
           },
 
           error: (error) => {
-            console.error('Error loading employee:', error);
+
+            console.error(
+              'Error loading employee:',
+              error
+            );
+
+            this.backendError =
+              this.getErrorMessage(error);
+
           }
 
         });
+
     }
+
   }
 
-  onSubmit() {
-if (this.employeeForm.invalid) {
-    this.employeeForm.markAllAsTouched();
-    return;
-  }
-   
-    const employee = this.employeeForm.value as Employee;
 
-    // EDIT
+  // =========================
+  // SUBMIT
+  // =========================
+
+  onSubmit(): void {
+
+    // Clear old messages
+
+    this.backendError = '';
+    this.successMessage = '';
+
+
+    // Check form validation
+
+    if (this.employeeForm.invalid) {
+
+      this.employeeForm.markAllAsTouched();
+
+      return;
+    }
+
+
+    const employee =
+      this.employeeForm.value as Employee;
+
+
+    // =========================
+    // UPDATE
+    // =========================
+
     if (this.isEditMode && this.employeeId) {
 
       this.employeeService
-        .updateEmployee(this.employeeId, employee)
+        .updateEmployee(
+          this.employeeId,
+          employee
+        )
         .subscribe({
 
           next: (updatedEmployee) => {
 
-            console.log('Employee updated:', updatedEmployee);
+            console.log(
+              'Employee updated:',
+              updatedEmployee
+            );
 
-            this.router.navigate(['/employees']);
+            this.successMessage =
+              'Employee updated successfully.';
+
+            setTimeout(() => {
+
+              this.router.navigate([
+                '/employees'
+              ]);
+
+            }, 1000);
 
           },
 
           error: (error) => {
-            console.error('Error updating employee:', error);
+
+            console.error(
+              'Error updating employee:',
+              error
+            );
+
+            // Show backend error to user
+            this.backendError =
+              this.getErrorMessage(error);
+
           }
 
         });
 
-    } 
-    
-    // ADD
+    }
+
+
+    // =========================
+    // CREATE
+    // =========================
+
     else {
 
       this.employeeService
-        .createEmployee(employee)
-        .subscribe({
+  .createEmployee(employee)
+  .subscribe({
 
-          next: (newEmployee) => {
+    next: (newEmployee) => {
 
-            console.log('Employee created:', newEmployee);
+      console.log(
+        'Employee created:',
+        newEmployee
+      );
 
-            this.router.navigate(['/employees']);
+      this.successMessage =
+        'Employee created successfully.';
 
-          },
+      setTimeout(() => {
+        this.router.navigate(['/employees']);
+      }, 1000);
 
-          error: (error) => {
-            console.error('Error creating employee:', error);
-          }
+    },
 
-        });
+    error: (error) => {
+
+      console.log('CREATE ERROR:', error);
+      console.log('STATUS:', error.status);
+      console.log('ERROR BODY:', error.error);
+      console.log('MESSAGE:', error.error?.message);
+
+      this.backendError =
+        error?.error?.message ||
+        error?.error ||
+        'Something went wrong.';
+
+      console.log(
+        'backendError displayed:',
+        this.backendError
+      );
+
     }
+
+  });
+
+      
+
+    }
+
   }
+
+
+  // =========================
+  // GET BACKEND ERROR MESSAGE
+  // =========================
+
+  private getErrorMessage(error: any): string {
+
+    console.error(
+      'FULL BACKEND ERROR:',
+      error
+    );
+
+
+    // Case 1:
+    // Backend returns:
+    // { "message": "Email already exists" }
+
+    if (error?.error?.message) {
+
+      return error.error.message;
+
+    }
+
+
+    // Case 2:
+    // Backend returns plain text:
+    // "Email already exists"
+
+    if (typeof error?.error === 'string') {
+
+      return error.error;
+
+    }
+
+
+    // Case 3:
+    // Backend returns an error field
+
+    if (error?.error?.error) {
+
+      return error.error.error;
+
+    }
+
+
+    // Case 4:
+    // HTTP status
+
+    if (error?.status === 400) {
+
+      return 'Invalid employee data.';
+
+    }
+
+    if (error?.status === 401) {
+
+      return 'You are not authorized.';
+
+    }
+
+    if (error?.status === 403) {
+
+      return 'You do not have permission to perform this action.';
+
+    }
+
+    if (error?.status === 404) {
+
+      return 'Employee not found.';
+
+    }
+
+    if (error?.status === 409) {
+
+      return 'Email already exists.';
+
+    }
+
+    if (error?.status === 500) {
+
+      return 'Server error. Please try again.';
+
+    }
+
+
+    // Default
+
+    return 'Something went wrong. Please try again.';
+
+  }
+
 }

@@ -45,3 +45,10 @@
   text-align: center;
   margin-top: 15px;
 }
+.login-container p.error-message {
+  text-align: center;
+  margin-top: 15px;
+  color: #dc2626;
+  font-size: 14px;
+  font-weight: 500;
+}

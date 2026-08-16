@@ -1,4 +1,12 @@
-<h2>{{ isEditMode ? 'Edit Employee' : 'Add Employee' }}</h2>
+<h2>
+  {{ isEditMode ? 'Edit Employee' : 'Add Employee' }}
+</h2>
+
+@if (backendError) {
+  <div class="backend-error">
+    {{ backendError }}
+  </div>
+}
 
 @if (successMessage) {
   <div class="success-message">
@@ -6,7 +14,20 @@
   </div>
 }
 
-<form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+<form
+  [formGroup]="employeeForm"
+  (ngSubmit)="onSubmit()"
+>
+
+@if (backendError) {
+
+  <div class="backend-error">
+
+    {{ backendError }}
+
+  </div>
+
+}
 
   <!-- Name -->
   <label>Name</label>

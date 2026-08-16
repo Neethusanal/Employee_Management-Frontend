@@ -23,54 +23,57 @@ export class Login {
 
   login(): void {
 
-    // Clear previous error
-    this.errorMessage = '';
+  // Clear previous error
+  this.errorMessage = '';
 
-    // Validate fields
-    if (!this.email || !this.password) {
+  // Validate fields
+  if (!this.email || !this.password) {
+    this.errorMessage = 'Please enter email and password';
+    return;
+  }
 
-      this.errorMessage =
-        'Please enter email and password';
+  console.log('Login attempt:', this.email);
 
-      return;
+  this.auth.login(this.email, this.password).subscribe({
+
+    next: (response) => {
+
+      console.log('Login successful:', response);
+
+      localStorage.setItem('loggedIn', 'true');
+
+      this.router.navigate(['/employees']);
+
+    },
+
+    error: (error) => {
+
+      console.error('FULL LOGIN ERROR:', error);
+      console.error('Status:', error.status);
+      console.error('Error body:', error.error);
+      console.error('Message:', error.message);
+
+      // If backend sends a message
+      if (error.error?.message) {
+
+        this.errorMessage = error.error.message;
+
+      } else if (typeof error.error === 'string') {
+
+        this.errorMessage = error.error;
+
+      } else {
+
+        this.errorMessage = 'Invalid email or password';
+
+      }
+
+      console.log(
+        'Error message displayed:',
+        this.errorMessage
+      );
     }
 
-    console.log('Login attempt:', this.email);
-
-    this.auth
-      .login(this.email, this.password)
-      .subscribe({
-
-        // LOGIN SUCCESS
-        next: (response) => {
-
-          console.log(
-            'Login successful:',
-            response
-          );
-
-          // Store login state
-          localStorage.setItem(
-            'loggedIn',
-            'true'
-          );
-
-          // Go to employee list
-          this.router.navigate(['/employees']);
-        },
-
-        // LOGIN FAILED
-        error: (error) => {
-
-          console.error(
-            'Login error:',
-            error
-          );
-
-          this.errorMessage =
-            'Invalid email or password';
-        }
-
-      });
-  }
+  });
+}
 }

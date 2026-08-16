@@ -5,6 +5,7 @@
   <form (ngSubmit)="login()">
 
     <label>Email</label>
+
     <input
       type="email"
       [(ngModel)]="email"
@@ -13,6 +14,7 @@
     >
 
     <label>Password</label>
+
     <input
       type="password"
       [(ngModel)]="password"
@@ -24,9 +26,12 @@
       Login
     </button>
 
-   @if (errorMessage) {
-  <p>{{ errorMessage }}</p>
-}
+    <!-- ERROR MESSAGE -->
+    @if (errorMessage) {
+      <p class="error-message">
+        {{ errorMessage }}
+      </p>
+    }
 
   </form>
 
