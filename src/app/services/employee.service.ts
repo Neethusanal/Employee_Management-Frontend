@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee } from '../models/employee';
 
@@ -10,42 +10,70 @@ export class EmployeeService {
 
   private http = inject(HttpClient);
 
-  // private apiUrl = 'http://localhost:8081/api/employees';
-  private apiUrl ='https://a46b-2001-8f8-1737-1a8b-c568-36df-b6d2-c6cd.ngrok-free.app/api/employees';
+  private apiUrl =
+    'https://a46b-2001-8f8-1737-1a8b-c568-36df-b6d2-c6cd.ngrok-free.app/api/employees';
+
+  private headers = new HttpHeaders({
+    'ngrok-skip-browser-warning': 'true'
+  });
 
   getEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(this.apiUrl);
+
+    return this.http.get<Employee[]>(
+      this.apiUrl,
+      {
+        headers: this.headers
+      }
+    );
+
   }
-  
 
   createEmployee(employee: Employee): Observable<Employee> {
 
-    const createUrl = `${this.apiUrl}/new`;
+    return this.http.post<Employee>(
+      `${this.apiUrl}/new`,
+      employee,
+      {
+        headers: this.headers
+      }
+    );
 
-    console.log('API URL:', createUrl);
-    console.log('Employee data being sent:', employee);
-
-    return this.http.post<Employee>(createUrl, employee);
   }
+
   getEmployeeById(id: string): Observable<Employee> {
-  return this.http.get<Employee>(
-    `${this.apiUrl}/${id}`
-  );
-}
+
+    return this.http.get<Employee>(
+      `${this.apiUrl}/${id}`,
+      {
+        headers: this.headers
+      }
+    );
+
+  }
 
   updateEmployee(
     id: string,
     employee: Employee
   ): Observable<Employee> {
+
     return this.http.put<Employee>(
       `${this.apiUrl}/${id}`,
-      employee
+      employee,
+      {
+        headers: this.headers
+      }
     );
+
   }
 
   deleteEmployee(id: string): Observable<void> {
+
     return this.http.delete<void>(
-      `${this.apiUrl}/${id}`
+      `${this.apiUrl}/${id}`,
+      {
+        headers: this.headers
+      }
     );
+
   }
 }
