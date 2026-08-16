@@ -21,32 +21,56 @@ export class Login {
     private router: Router
   ) {}
 
-  login() {
+  login(): void {
 
-    if (this.email && this.password) {
+    // Clear previous error
+    this.errorMessage = '';
 
-     this.auth.login(this.email, this.password).subscribe({
-  next: (response) => {
+    // Validate fields
+    if (!this.email || !this.password) {
 
-    localStorage.setItem('loggedIn', 'true');
+      this.errorMessage =
+        'Please enter email and password';
 
-    this.router.navigate(['/employees']);
-
-  },
-
-  error: (error) => {
-
-    this.errorMessage = 'Invalid email or password';
-
-  }
-});
-
-      this.router.navigate(['/employees']);
-
-    } else {
-
-      this.errorMessage = 'Please enter email and password';
-
+      return;
     }
+
+    console.log('Login attempt:', this.email);
+
+    this.auth
+      .login(this.email, this.password)
+      .subscribe({
+
+        // LOGIN SUCCESS
+        next: (response) => {
+
+          console.log(
+            'Login successful:',
+            response
+          );
+
+          // Store login state
+          localStorage.setItem(
+            'loggedIn',
+            'true'
+          );
+
+          // Go to employee list
+          this.router.navigate(['/employees']);
+        },
+
+        // LOGIN FAILED
+        error: (error) => {
+
+          console.error(
+            'Login error:',
+            error
+          );
+
+          this.errorMessage =
+            'Invalid email or password';
+        }
+
+      });
   }
 }

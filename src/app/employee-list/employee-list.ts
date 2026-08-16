@@ -347,15 +347,21 @@ export class EmployeeList implements OnInit {
   // LOGOUT
   // =========================
 
-  logout() {
+  // logout() {
 
-    this.auth.logout();
+  //   this.auth.logout();
 
-    this.router.navigate(
-      ['/login'],
-      { replaceUrl: true }
-    );
+  //   this.router.navigate(
+  //     ['/login'],
+  //     { replaceUrl: true }
+  //   );
 
   }
+  logout(): void {
+
+  localStorage.removeItem('loggedIn');
+
+  this.router.navigate(['/login']);
+}
 
 }
