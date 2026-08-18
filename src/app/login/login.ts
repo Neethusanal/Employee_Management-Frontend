@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Auth } from '../services/auth';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -18,7 +18,8 @@ export class Login {
 
   constructor(
     private auth: Auth,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   login(): void {
@@ -56,7 +57,11 @@ export class Login {
       // If backend sends a message
       if (error.error?.message) {
 
-        this.errorMessage = error.error.message;
+       this.snackBar.open( error.error?.message, 'Close', {
+  duration: 3000,
+  horizontalPosition: 'right',
+  verticalPosition: 'top'
+});
 
       } else if (typeof error.error === 'string') {
 
@@ -64,7 +69,11 @@ export class Login {
 
       } else {
 
-        this.errorMessage = 'Invalid email or password';
+         this.snackBar.open( "Invalid email or Password", 'Close', {
+  duration: 3000,
+  horizontalPosition: 'right',
+  verticalPosition: 'top'
+});
 
       }
 

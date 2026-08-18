@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { EmployeeService } from '../services/employee.service';
 import { Employee } from '../models/employee';
 
@@ -17,7 +17,7 @@ export class EmployeeForm implements OnInit {
   private employeeService = inject(EmployeeService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-
+constructor(private snackBar: MatSnackBar) {}
   // Backend error message
   backendError = '';
 
@@ -111,8 +111,11 @@ export class EmployeeForm implements OnInit {
               error
             );
 
-            this.backendError =
-              this.getErrorMessage(error);
+            this.snackBar.open( error.error?.message, 'Close', {
+  duration: 3000,
+  horizontalPosition: 'right',
+  verticalPosition: 'top'
+});
 
           }
 
@@ -209,8 +212,11 @@ isFutureJoiningDate(): boolean {
               updatedEmployee
             );
 
-            this.successMessage =
-              'Employee updated successfully.';
+            this.snackBar.open( "Employee updated successfully", 'Close', {
+  duration: 3000,
+  horizontalPosition: 'right',
+  verticalPosition: 'top'
+});
 
             setTimeout(() => {
 
@@ -230,8 +236,11 @@ isFutureJoiningDate(): boolean {
             );
 
             // Show backend error to user
-            this.backendError =
-              this.getErrorMessage(error);
+             this.snackBar.open( error.error?.message, 'Close', {
+  duration: 3000,
+  horizontalPosition: 'right',
+  verticalPosition: 'top'
+});
 
           }
 
@@ -257,9 +266,11 @@ isFutureJoiningDate(): boolean {
         newEmployee
       );
 
-      this.successMessage =
-        'Employee created successfully.';
-
+      this.snackBar.open('Employee created successfully!', 'Close', {
+  duration: 3000,
+  horizontalPosition: 'right',
+  verticalPosition: 'top'
+});
       setTimeout(() => {
         this.router.navigate(['/employees']);
       }, 1000);
@@ -273,10 +284,16 @@ isFutureJoiningDate(): boolean {
       console.log('ERROR BODY:', error.error);
       console.log('MESSAGE:', error.error?.message);
 
-      this.backendError =
-        error?.error?.message ||
-        error?.error ||
-        'Something went wrong.';
+      // this.backendError =
+      //   error?.error?.message ||
+      //   error?.error ||
+      //   'Something went wrong.';
+
+      this.snackBar.open( error.error?.message, 'Close', {
+  duration: 3000,
+  horizontalPosition: 'right',
+  verticalPosition: 'top'
+});
 
       console.log(
         'backendError displayed:',

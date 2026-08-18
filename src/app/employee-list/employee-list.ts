@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 
 import { Router } from '@angular/router';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { EmployeeService } from '../services/employee.service';
 import { Employee } from '../models/employee';
 import { Auth } from '../services/auth';
@@ -25,14 +25,10 @@ export class EmployeeList implements OnInit {
   // SERVICES
   // =========================
 
-  constructor(
-    private auth: Auth
-  ) {}
-
-  private employeeService = inject(EmployeeService);
-  private router = inject(Router);
-
-
+  private auth = inject(Auth);
+private snackBar = inject(MatSnackBar);
+private employeeService = inject(EmployeeService);
+private router = inject(Router);
   // =========================
   // EMPLOYEES
   // =========================
@@ -324,6 +320,11 @@ export class EmployeeList implements OnInit {
             'Employee deleted:',
             employeeId
           );
+          this.snackBar.open('Employee Deleted successfully!', 'Close', {
+  duration: 3000,
+  horizontalPosition: 'right',
+  verticalPosition: 'top'
+});
 
           this.loadEmployees();
 
