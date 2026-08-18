@@ -195,60 +195,49 @@ isFutureJoiningDate(): boolean {
     // =========================
     // UPDATE
     // =========================
+if (this.isEditMode && this.employeeId) {
 
-    if (this.isEditMode && this.employeeId) {
+  this.employeeService
+    .updateEmployee(this.employeeId, employee)
+    .subscribe({
 
-      this.employeeService
-        .updateEmployee(
-          this.employeeId,
-          employee
-        )
-        .subscribe({
+      next: (updatedEmployee) => {
 
-          next: (updatedEmployee) => {
+        console.log('Employee updated:', updatedEmployee);
 
-            console.log(
-              'Employee updated:',
-              updatedEmployee
-            );
-
-            this.snackBar.open( "Employee updated successfully", 'Close', {
-  duration: 3000,
-  horizontalPosition: 'right',
-  verticalPosition: 'top'
-});
-
-            setTimeout(() => {
-
-              this.router.navigate([
-                '/employees'
-              ]);
-
-            }, 1000);
-
-          },
-
-          error: (error) => {
-
-            console.error(
-              'Error updating employee:',
-              error
-            );
-
-            // Show backend error to user
-             this.snackBar.open( error.error?.message, 'Close', {
-  duration: 3000,
-  horizontalPosition: 'right',
-  verticalPosition: 'top'
-});
-
+        this.snackBar.open(
+          'Employee updated successfully',
+          'Close',
+          {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
           }
+        );
 
-        });
+        this.router.navigate(['/employees']);
+      },
 
-    }
+      error: (error) => {
 
+        console.error(
+          'Error updating employee:',
+          error
+        );
 
+        this.snackBar.open(
+          error.error?.message || 'Failed to update employee',
+          'Close',
+          {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          }
+        );
+      }
+
+    });
+}
     // =========================
     // CREATE
     // =========================
