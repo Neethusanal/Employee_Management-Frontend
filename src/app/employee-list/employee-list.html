@@ -1,6 +1,8 @@
 <div class="container">
 
-  <!-- HEADER -->
+  <!-- =========================
+       HEADER
+  ========================== -->
   <div class="header">
 
     <div>
@@ -29,7 +31,9 @@
   </div>
 
 
-  <!-- SEARCH & FILTERS -->
+  <!-- =========================
+       SEARCH & FILTERS
+  ========================== -->
   <div class="search-card">
 
     <!-- Search -->
@@ -45,12 +49,16 @@
       />
 
       @if (searchTerm()) {
+
         <button
           type="button"
           class="clear-btn"
           (click)="clearSearch()">
+
           ×
+
         </button>
+
       }
 
     </div>
@@ -65,12 +73,19 @@
         [value]="departmentFilter()"
         (change)="onDepartmentFilter($event)">
 
-        <option value="">All Departments</option>
+        <option value="">
+          All Departments
+        </option>
 
-        @for (department of departments(); track department) {
+        @for (
+          department of departments();
+          track department
+        ) {
+
           <option [value]="department">
             {{ department }}
           </option>
+
         }
 
       </select>
@@ -87,9 +102,17 @@
         [value]="statusFilter()"
         (change)="onStatusFilter($event)">
 
-        <option value="">All Status</option>
-        <option value="ACTIVE">ACTIVE</option>
-        <option value="INACTIVE">INACTIVE</option>
+        <option value="">
+          All Status
+        </option>
+
+        <option value="ACTIVE">
+          ACTIVE
+        </option>
+
+        <option value="INACTIVE">
+          INACTIVE
+        </option>
 
       </select>
 
@@ -105,9 +128,17 @@
         [value]="roleFilter()"
         (change)="onRoleFilter($event)">
 
-        <option value="">All Roles</option>
-        <option value="EMPLOYEE">EMPLOYEE</option>
-        <option value="ADMIN">ADMIN</option>
+        <option value="">
+          All Roles
+        </option>
+
+        <option value="EMPLOYEE">
+          EMPLOYEE
+        </option>
+
+        <option value="ADMIN">
+          ADMIN
+        </option>
 
       </select>
 
@@ -136,7 +167,9 @@
   </div>
 
 
-  <!-- EMPLOYEE TABLE -->
+  <!-- =========================
+       EMPLOYEE TABLE
+  ========================== -->
   <div class="table-card">
 
     <table>
@@ -170,13 +203,17 @@
 
           <tr>
 
+            <!-- Employee ID -->
             <td>
+
               <span class="employee-id">
                 {{ employee.employeeId }}
               </span>
+
             </td>
 
 
+            <!-- Name -->
             <td>
 
               <div class="employee-name">
@@ -186,31 +223,37 @@
             </td>
 
 
+            <!-- Email -->
             <td>
               {{ employee.email }}
             </td>
 
 
+            <!-- Phone -->
             <td>
               {{ employee.phoneNumber }}
             </td>
 
 
+            <!-- Department -->
             <td>
               {{ employee.department }}
             </td>
 
 
+            <!-- Designation -->
             <td>
               {{ employee.designation }}
             </td>
 
 
+            <!-- Joining Date -->
             <td>
               {{ employee.joiningDate }}
             </td>
 
 
+            <!-- Status -->
             <td>
 
               <span
@@ -225,17 +268,17 @@
             </td>
 
 
+            <!-- Role -->
             <td>
 
               <span class="role-badge">
-
                 {{ employee.role }}
-
               </span>
 
             </td>
 
 
+            <!-- Actions -->
             <td>
 
               <div class="actions">
@@ -268,15 +311,24 @@
         }
 
 
+        <!-- No employees -->
         @empty {
 
           <tr>
 
-            <td colspan="10" class="empty">
+            <td
+              colspan="10"
+              class="empty">
 
-              @if (searchTerm() || departmentFilter() || statusFilter() || roleFilter()) {
+              @if (
+                searchTerm() ||
+                departmentFilter() ||
+                statusFilter() ||
+                roleFilter()
+              ) {
 
-                No employees match your search or filters.
+                No employees match your
+                search or filters.
 
               } @else {
 
@@ -295,5 +347,43 @@
     </table>
 
   </div>
+
+
+  <!-- =========================
+       PAGINATION
+  ========================== -->
+
+  @if (employees().length > 0) {
+
+    <div class="pagination">
+
+      <!-- Previous -->
+      <button
+  type="button"
+  class="page-btn"
+  (click)="previousPage()"
+  [disabled]="page === 0">
+
+  ←
+
+</button>
+
+<span class="page-info">
+   {{ page + 1 }}
+</span>
+
+<button
+  type="button"
+  class="page-btn"
+  (click)="nextPage()"
+  [disabled]="employees().length < pageSize">
+
+  →
+
+</button>
+
+    </div>
+
+  }
 
 </div>

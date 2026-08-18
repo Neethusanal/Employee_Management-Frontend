@@ -34,7 +34,8 @@ private router = inject(Router);
   // =========================
 
   employees = signal<Employee[]>([]);
-
+page = 0;
+pageSize = 10;
 
   // =========================
   // SEARCH
@@ -225,18 +226,47 @@ private router = inject(Router);
   // GET ALL EMPLOYEES
   // =========================
 
-  loadEmployees() {
+  // loadEmployees() {
 
-    this.employeeService.getEmployees().subscribe({
+  //   this.employeeService.getEmployees().subscribe({
+
+  //     next: (data) => {
+
+  //       this.employees.set(data);
+
+  //       console.log(
+  //         'Backend response:',
+  //         data
+  //       );
+
+  //     },
+
+  //     error: (error) => {
+
+  //       console.error(
+  //         'Backend connection failed:',
+  //         error
+  //       );
+
+  //     }
+
+  //   });
+
+  // }
+loadEmployees(): void {
+
+  this.employeeService
+    .getEmployees(this.page, this.pageSize)
+    .subscribe({
 
       next: (data) => {
 
-        this.employees.set(data);
-
         console.log(
-          'Backend response:',
+          'Employees received:',
           data
         );
+
+        this.employees.set(data);
 
       },
 
@@ -251,9 +281,39 @@ private router = inject(Router);
 
     });
 
+}
+
+
+// =========================
+// NEXT PAGE
+// =========================
+
+nextPage(): void {
+
+  if (this.employees().length < this.pageSize) {
+    return;
   }
 
+  this.page++;
 
+  this.loadEmployees();
+}
+
+
+// =========================
+// PREVIOUS PAGE
+// =========================
+
+previousPage(): void {
+
+  if (this.page === 0) {
+    return;
+  }
+
+  this.page--;
+
+  this.loadEmployees();
+}
   // =========================
   // ADD
   // =========================

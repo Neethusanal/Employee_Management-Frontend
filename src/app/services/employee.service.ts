@@ -1,5 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders
+} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee } from '../models/employee';
 
@@ -10,16 +13,37 @@ export class EmployeeService {
 
   private http = inject(HttpClient);
 
-  private apiUrl =' https://43f4-2001-8f8-1737-1a8b-b0c1-b543-f6cf-422d.ngrok-free.app/api/employees';
+  private apiUrl =
+    'https://43f4-2001-8f8-1737-1a8b-b0c1-b543-f6cf-422d.ngrok-free.app/api/employees';
 
-  private headers = new HttpHeaders({
-    'ngrok-skip-browser-warning': 'true'
-  });
 
-  getEmployees(): Observable<Employee[]> {
+  // =========================
+  // JWT + NGROK HEADERS
+  // =========================
+
+  private get headers(): HttpHeaders {
+
+    const token = localStorage.getItem('token');
+
+    return new HttpHeaders({
+      'ngrok-skip-browser-warning': 'true',
+      'Authorization': `Bearer ${token}`
+    });
+
+  }
+
+
+  // =========================
+  // GET EMPLOYEES
+  // =========================
+
+  getEmployees(
+    page: number = 0,
+    size: number = 10
+  ): Observable<Employee[]> {
 
     return this.http.get<Employee[]>(
-      this.apiUrl,
+      `${this.apiUrl}?page=${page}&size=${size}`,
       {
         headers: this.headers
       }
@@ -27,7 +51,14 @@ export class EmployeeService {
 
   }
 
-  createEmployee(employee: Employee): Observable<Employee> {
+
+  // =========================
+  // CREATE EMPLOYEE
+  // =========================
+
+  createEmployee(
+    employee: Employee
+  ): Observable<Employee> {
 
     return this.http.post<Employee>(
       `${this.apiUrl}/new`,
@@ -39,7 +70,14 @@ export class EmployeeService {
 
   }
 
-  getEmployeeById(id: string): Observable<Employee> {
+
+  // =========================
+  // GET EMPLOYEE BY ID
+  // =========================
+
+  getEmployeeById(
+    id: string
+  ): Observable<Employee> {
 
     return this.http.get<Employee>(
       `${this.apiUrl}/${id}`,
@@ -49,6 +87,11 @@ export class EmployeeService {
     );
 
   }
+
+
+  // =========================
+  // UPDATE EMPLOYEE
+  // =========================
 
   updateEmployee(
     id: string,
@@ -65,7 +108,14 @@ export class EmployeeService {
 
   }
 
-  deleteEmployee(id: string): Observable<void> {
+
+  // =========================
+  // DELETE EMPLOYEE
+  // =========================
+
+  deleteEmployee(
+    id: string
+  ): Observable<void> {
 
     return this.http.delete<void>(
       `${this.apiUrl}/${id}`,
@@ -75,4 +125,5 @@ export class EmployeeService {
     );
 
   }
+
 }
