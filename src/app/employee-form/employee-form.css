@@ -59,6 +59,12 @@ button:hover {
   color: #dc2626;
   font-size: 13px;
 }
+.info {
+  display: block;
+  margin-top: 5px;
+  color: #2669dc;
+  font-size: 13px;
+}
 
 .success-message {
   margin-bottom: 15px;
@@ -78,4 +84,11 @@ button:hover {
   color: #b91c1c;
   font-size: 14px;
   font-weight: 600;
+}
+/* Email field in edit mode */
+input[readonly] {
+  background-color: #f1f1f1;
+  color: #666;
+  cursor: not-allowed;
+  border: 1px solid #ccc;
 }

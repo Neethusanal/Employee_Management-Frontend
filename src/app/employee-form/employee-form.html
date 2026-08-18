@@ -48,7 +48,9 @@
   <input
     type="email"
     formControlName="email"
+     [readonly]="isEditMode"
   >
+
 
   @if (isInvalid('email')) {
 
@@ -114,6 +116,7 @@
   <input
     type="date"
     formControlName="joiningDate"
+    change="onJoiningDateChange()"
   >
 
   @if (isInvalid('joiningDate')) {
@@ -124,20 +127,31 @@
 
 
   <!-- Status -->
-  <label>Status</label>
+  <!-- Status -->
+<label>Status</label>
+
+@if (isFutureJoiningDate()) {
+
   <select formControlName="status">
-
-    <option value="ACTIVE">ACTIVE</option>
     <option value="INACTIVE">INACTIVE</option>
-
   </select>
 
-  @if (isInvalid('status')) {
-    <small class="error">
-      Status is required.
-    </small>
-  }
 
+
+} @else {
+
+  <select formControlName="status">
+    <option value="ACTIVE">ACTIVE</option>
+    <option value="INACTIVE">INACTIVE</option>
+  </select>
+
+}
+
+@if (isInvalid('status')) {
+  <small class="error">
+    Status is required.
+  </small>
+}
 
   <!-- Role -->
   <label>Role</label>

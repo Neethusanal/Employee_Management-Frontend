@@ -122,6 +122,46 @@ export class EmployeeForm implements OnInit {
 
   }
 
+  onJoiningDateChange(): void {
+
+  const joiningDate =
+    this.employeeForm.get('joiningDate')?.value;
+
+  if (!joiningDate) {
+    return;
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const selectedDate = new Date(joiningDate);
+  selectedDate.setHours(0, 0, 0, 0);
+
+  // Future joining date
+  if (selectedDate > today) {
+
+    this.employeeForm.patchValue({
+      status: 'INACTIVE'
+    });
+  }
+}
+isFutureJoiningDate(): boolean {
+
+  const joiningDate =
+    this.employeeForm.get('joiningDate')?.value;
+
+  if (!joiningDate) {
+    return false;
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const selectedDate = new Date(joiningDate);
+  selectedDate.setHours(0, 0, 0, 0);
+
+  return selectedDate > today;
+}
 
   // =========================
   // SUBMIT

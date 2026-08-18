@@ -10,8 +10,7 @@ export class EmployeeService {
 
   private http = inject(HttpClient);
 
-  private apiUrl =
-    'https://a46b-2001-8f8-1737-1a8b-c568-36df-b6d2-c6cd.ngrok-free.app/api/employees';
+  private apiUrl =' https://43f4-2001-8f8-1737-1a8b-b0c1-b543-f6cf-422d.ngrok-free.app/api/employees';
 
   private headers = new HttpHeaders({
     'ngrok-skip-browser-warning': 'true'
