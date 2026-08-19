@@ -32,15 +32,39 @@
   color: #666;
 }
 
-
-/* =========================
-   HEADER BUTTONS
-========================= */
-
+/* Header buttons */
 .header-actions {
   display: flex;
   gap: 10px;
   align-items: center;
+}
+
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .header h1 {
+    font-size: 24px;
+  }
+
+  .header p {
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  .header-actions {
+    width: 100%;
+  }
+
 }
 
 .add-btn,
@@ -499,4 +523,14 @@ tr:hover {
   font-size: 14px;
   font-weight: 600;
   color: #333;
+}
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive table {
+  min-width: 1100px;
+  width: 100%;
 }

@@ -273,7 +273,7 @@ loadEmployees(): void {
       error: (error) => {
 
         console.error(
-          'Backend connection failed:',
+          
           error
         );
 
