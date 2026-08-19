@@ -6,11 +6,15 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Auth } from '../services/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [
+    FormsModule,
+    MatIconModule
+  ],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
@@ -19,7 +23,7 @@ export class Login {
   email = '';
   password = '';
   errorMessage = '';
-
+showPassword = false;
   constructor(
     private auth: Auth,
     private router: Router,
@@ -136,7 +140,7 @@ export class Login {
         } else {
 
           this.snackBar.open(
-            'Invalid email or password',
+            'backend error',
             'Close',
             {
               duration: 3000,

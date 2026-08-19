@@ -15,18 +15,29 @@
 
     <label>Password</label>
 
-    <input
-      type="password"
-      [(ngModel)]="password"
-      name="password"
-      required
-    >
+    <div class="password-container">
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        [(ngModel)]="password"
+        name="password"
+        required
+      >
 
-    <button type="submit">
+      <button
+  type="button"
+  class="eye-button"
+  (click)="showPassword = !showPassword"
+>
+  <mat-icon>
+    {{ showPassword ? 'visibility_off' : 'visibility' }}
+  </mat-icon>
+</button>
+    </div>
+
+    <button type="submit" class="login-button">
       Login
     </button>
 
-    <!-- ERROR MESSAGE -->
     @if (errorMessage) {
       <p class="error-message">
         {{ errorMessage }}
