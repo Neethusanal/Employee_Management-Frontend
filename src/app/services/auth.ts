@@ -14,8 +14,7 @@ export interface LoginResponse {
 })
 export class Auth {
 
-  private apiUrl =
-    'https://43f4-2001-8f8-1737-1a8b-b0c1-b543-f6cf-422d.ngrok-free.app/api/employees/auth/login';
+  private apiUrl ='https://fc32-2001-8f8-1737-1a8b-b0c1-b543-f6cf-422d.ngrok-free.app/api/employees/auth/login';
 
   constructor(private http: HttpClient) {}
 

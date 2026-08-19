@@ -14,7 +14,7 @@ export class EmployeeService {
   private http = inject(HttpClient);
 
   private apiUrl =
-    'https://43f4-2001-8f8-1737-1a8b-b0c1-b543-f6cf-422d.ngrok-free.app/api/employees';
+    'https://fc32-2001-8f8-1737-1a8b-b0c1-b543-f6cf-422d.ngrok-free.app/api/employees';
 
 
   // =========================
