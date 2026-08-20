@@ -1,8 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import {
-  HttpClient,
-  HttpHeaders
-} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee } from '../models/employee';
 
@@ -18,22 +15,6 @@ export class EmployeeService {
 
 
   // =========================
-  // JWT + NGROK HEADERS
-  // =========================
-
-  private get headers(): HttpHeaders {
-
-    const token = localStorage.getItem('token');
-
-    return new HttpHeaders({
-      'ngrok-skip-browser-warning': 'true',
-      'Authorization': `Bearer ${token}`
-    });
-
-  }
-
-
-  // =========================
   // GET EMPLOYEES
   // =========================
 
@@ -43,10 +24,7 @@ export class EmployeeService {
   ): Observable<Employee[]> {
 
     return this.http.get<Employee[]>(
-      `${this.apiUrl}?page=${page}&size=${size}`,
-      {
-        headers: this.headers
-      }
+      `${this.apiUrl}?page=${page}&size=${size}`
     );
 
   }
@@ -62,10 +40,7 @@ export class EmployeeService {
 
     return this.http.post<Employee>(
       `${this.apiUrl}/new`,
-      employee,
-      {
-        headers: this.headers
-      }
+      employee
     );
 
   }
@@ -80,10 +55,7 @@ export class EmployeeService {
   ): Observable<Employee> {
 
     return this.http.get<Employee>(
-      `${this.apiUrl}/${id}`,
-      {
-        headers: this.headers
-      }
+      `${this.apiUrl}/${id}`
     );
 
   }
@@ -100,10 +72,7 @@ export class EmployeeService {
 
     return this.http.put<Employee>(
       `${this.apiUrl}/${id}`,
-      employee,
-      {
-        headers: this.headers
-      }
+      employee
     );
 
   }
@@ -118,10 +87,7 @@ export class EmployeeService {
   ): Observable<void> {
 
     return this.http.delete<void>(
-      `${this.apiUrl}/${id}`,
-      {
-        headers: this.headers
-      }
+      `${this.apiUrl}/${id}`
     );
 
   }
