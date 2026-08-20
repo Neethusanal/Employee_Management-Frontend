@@ -396,6 +396,11 @@ previousPage(): void {
             'Error deleting employee:',
             error
           );
+           this.snackBar.open("Failed to delete", 'Close', {
+  duration: 3000,
+  horizontalPosition: 'right',
+  verticalPosition: 'top'
+});
 
         }
 

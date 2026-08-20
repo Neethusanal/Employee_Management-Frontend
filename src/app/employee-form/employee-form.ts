@@ -226,7 +226,7 @@ if (this.isEditMode && this.employeeId) {
         );
 
         this.snackBar.open(
-          error.error?.message || 'Failed to update employee',
+          error.staus || 'Failed to update employee',
           'Close',
           {
             duration: 3000,
